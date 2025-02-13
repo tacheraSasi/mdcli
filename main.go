@@ -25,6 +25,7 @@ func main() {
 
 	mdFile := *filename
 	mdFileContent, err := renderer.ReadFile(mdFile)
+	
 	if err != nil {
 		fmt.Println(err)
 		return
