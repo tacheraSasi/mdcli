@@ -1,6 +1,10 @@
 package renderer
 
-import "github.com/charmbracelet/glamour"
+import (
+	"os"
+
+	"github.com/charmbracelet/glamour"
+)
 
 func Render(input string) (string, error) {
 	// Rendering Markdown with glamour
@@ -9,4 +13,13 @@ func Render(input string) (string, error) {
 		return "", err
 	}
 	return rendered, nil
+}
+
+func ReadFile(file string)(string,error){
+	// Reading file
+	content, err :=os.ReadFile(file)
+	if err != nil {
+		return "", err
+	}
+	return string(content), nil
 }
