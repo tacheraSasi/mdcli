@@ -1,4 +1,4 @@
-VERSION=0.0.1
+VERSION=1
 
 build:
 	make build_android
@@ -8,46 +8,44 @@ build:
 
 build_linux:
 	@echo 'building linux binary...'
-	env GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ellie
+	env GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o mdcli
 	@echo 'shrinking binary...'
-	./upx --brute ellie
+	./upx --brute mdcli
 	@echo 'zipping build...'
-	tar -zcvf binaries/ellie_linux_amd64.tar.gz ellie
+	tar -zcvf bin/mdcli_linux_amd64.tar.gz mdcli
 	@echo 'cleaning up...'
-	rm ellie
+	rm mdcli
 
 build_windows:
 	@echo 'building windows executable...'
-	env GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o ellie_windows_amd64.exe
+	env GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o mdcli_windows_amd64.exe
 	@echo 'shrinking build...'
-	./upx --brute binaries/ellie_windows_amd64.exe
+	./upx --brute bin/mdcli_windows_amd64.exe
 
 build_mac:
 	@echo 'building mac binary...'
-	env GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o ellie
+	env GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o mdcli
 	@echo 'shrinking binary...'
-	./upx --brute ellie
+	./upx --brute mdcli
 	@echo 'zipping build...'
-	tar -zcvf binaries/ellie_mac_amd64.tar.gz ellie
+	tar -zcvf bin/mdcli_mac_amd64.tar.gz mdcli
 	@echo 'cleaning up...'
-	rm ellie
+	rm mdcli
 
 build_android:
 	@echo 'building android binary'
-	env GOOS=android GOARCH=arm64 go build -ldflags="-s -w" -o ellie
+	env GOOS=android GOARCH=arm64 go build -ldflags="-s -w" -o mdcli
 	@echo 'zipping build...'
-	tar -zcvf binaries/ellie_android_arm64.tar.gz ellie
+	tar -zcvf bin/mdcli_android_arm64.tar.gz mdcli
 	@echo 'cleaning up...'
-	rm ellie
+	rm mdcli
 
 build_test:
-	go build -ldflags="-s -w" -o ellie
+	go build -ldflags="-s -w" -o mdcli
 
 dependencies:
 	@echo 'checking dependencies...'
 	go mod tidy
-
-
 
 clean:
 	go clean
