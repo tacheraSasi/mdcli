@@ -18,6 +18,7 @@ func main() {
 			fmt.Println("No file provided")
 			return
 		}
+		*filename = args[0]
 	}
 	
 }
