@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+
+	"github.com/tacheraSasi/mdcli/renderer"
 )
 
 var VERSION string= "1"
@@ -20,5 +22,13 @@ func main() {
 		}
 		*filename = args[0]
 	}
+
+	mdFile := *filename
+	rendered, err := renderer.Render(mdFile)
+	if err != nil {
+		fmt.Println(err)
+		return 
+	}
+	fmt.Println(rendered)
 	
 }
