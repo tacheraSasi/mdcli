@@ -7,7 +7,7 @@ import (
 	"github.com/tacheraSasi/mdcli/renderer"
 )
 
-var VERSION string= "1"
+var VERSION string = "1"
 
 func main() {
 	filename := flag.String("file", "", "Path to the file")
@@ -24,13 +24,17 @@ func main() {
 	}
 
 	mdFile := *filename
-	mdFileContent := renderer.ReadFile(mdFile)
-	
+	mdFileContent, err := renderer.ReadFile(mdFile)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
 	rendered, err := renderer.Render(mdFileContent)
 	if err != nil {
 		fmt.Println(err)
-		return 
+		return
 	}
 	fmt.Println(rendered)
-	
+
 }
