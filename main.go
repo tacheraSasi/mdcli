@@ -19,7 +19,7 @@ func main() {
 		if len(args) == 0 {
 			fmt.Println("No file provided")
 			return
-		}
+		} 
 		*filename = args[0]
 	}
 
