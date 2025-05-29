@@ -17,7 +17,7 @@ func main() {
 	if *filename == "" {
 		args := flag.Args()
 		if len(args) == 0 {
-			fmt.Println("No file provided")
+			fmt.Println("No file provided, Please provide an .md file")
 			return
 		} 
 		*filename = args[0]
