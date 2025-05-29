@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"strings"
 
 	"github.com/tacheraSasi/mdcli/renderer"
 )
@@ -24,6 +25,10 @@ func main() {
 	}
 
 	mdFile := *filename
+	if !(strings.HasSuffix(mdfile,".md")){
+		fmt.Println("File had to be a markdown (.md)")
+		return
+	}
 	mdFileContent, err := renderer.ReadFile(mdFile)
 	
 	if err != nil {
