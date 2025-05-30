@@ -20,17 +20,17 @@ func main() {
 		if len(args) == 0 {
 			fmt.Println("No file provided, Please provide an .md file")
 			return
-		} 
+		}
 		*filename = args[0]
 	}
 
 	mdFile := *filename
-	if !(strings.HasSuffix(mdfile,".md")){
+	if !(strings.HasSuffix(mdFile, ".md")) {
 		fmt.Println("File had to be a markdown (.md)")
 		return
 	}
 	mdFileContent, err := renderer.ReadFile(mdFile)
-	
+
 	if err != nil {
 		fmt.Println(err)
 		return
