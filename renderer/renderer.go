@@ -6,9 +6,9 @@ import (
 	"github.com/charmbracelet/glamour"
 )
 
-func Render(input string) (string, error) {
+func Render(input string, style string) (string, error) {
 	// Rendering Markdown with glamour
-	rendered, err := glamour.Render(input, "dark")
+	rendered, err := glamour.Render(input, style)
 	if err != nil {
 		return "", err
 	}
