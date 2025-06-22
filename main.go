@@ -3,44 +3,67 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io"
+	"os"
 	"strings"
 
 	"github.com/tacheraSasi/mdcli/renderer"
 )
 
-var VERSION string = "1"
+var (
+	version = "1.0.0"
+	style   = flag.String("style", "dark", "Style to use for rendering")
+)
 
 func main() {
-	filename := flag.String("file", "", "Path to the file")
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "Usage: %s [options] [file]\n", os.Args[0])
+		fmt.Fprintln(os.Stderr, "Options:")
+		flag.PrintDefaults()
+	}
 
+	versionFlag := flag.Bool("version", false, "Print version and exit")
 	flag.Parse()
 
-	if *filename == "" {
-		args := flag.Args()
-		if len(args) == 0 {
-			fmt.Println("No file provided, Please provide an .md file")
-			return
+	if *versionFlag {
+		fmt.Println(version)
+		return
+	}
+
+	if err := run(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
+	var input string
+	var err error
+
+	if flag.NArg() == 0 {
+		// Read from stdin
+		content, err := io.ReadAll(os.Stdin)
+		if err != nil {
+			return fmt.Errorf("error reading from stdin: %w", err)
 		}
-		*filename = args[0]
+		input = string(content)
+	} else {
+		filename := flag.Arg(0)
+		if !strings.HasSuffix(filename, ".md") {
+			return fmt.Errorf("file must have a .md extension")
+		}
+		content, err := renderer.ReadFile(filename)
+		if err != nil {
+			return fmt.Errorf("error reading file: %w", err)
+		}
+		input = content
 	}
 
-	mdFile := *filename
-	if !(strings.HasSuffix(mdFile, ".md")) {
-		fmt.Println("File had to be a markdown (.md)")
-		return
-	}
-	mdFileContent, err := renderer.ReadFile(mdFile)
-
+	rendered, err := renderer.Render(input, *style)
 	if err != nil {
-		fmt.Println(err)
-		return
+		return fmt.Errorf("error rendering markdown: %w", err)
 	}
 
-	rendered, err := renderer.Render(mdFileContent)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
 	fmt.Println(rendered)
-
+	return nil
 }
