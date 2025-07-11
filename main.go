@@ -36,7 +36,7 @@ func main() {
 	exampleStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("36"))
 
 	flag.Usage = func() {
-		fmt.Fprintln(os.Stdout, usageStyle.Render(fmt.Sprintf("Usage: %s [options] [file ...]", os.Args[0])))
+		fmt.Fprintln(os.Stdout, usageStyle.Render(fmt.Sprintf("Usage: %s [options] [file ...]", "mdcli")))
 		fmt.Fprintln(os.Stdout, headerStyle.Render("Options:"))
 		flag.CommandLine.SetOutput(os.Stdout)
 		flag.PrintDefaults()
