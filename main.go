@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/charmbracelet/lipgloss"
 	"github.com/tacheraSasi/mdcli/renderer"
 )
 
@@ -30,16 +31,21 @@ var availableStyles = []string{
 }
 
 func main() {
+	usageStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("205"))
+	headerStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("39"))
+	exampleStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("36"))
+
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage: %s [options] [file ...]\n", os.Args[0])
-		fmt.Fprintln(os.Stderr, "Options:")
+		fmt.Fprintln(os.Stderr, usageStyle.Render(fmt.Sprintf("Usage: %s [options] [file ...]", os.Args[0])))
+		fmt.Fprintln(os.Stderr, headerStyle.Render("Options:"))
 		flag.PrintDefaults()
-		fmt.Fprintln(os.Stderr, "\nExamples:")
-		fmt.Fprintln(os.Stderr, "  mdcli README.md")
-		fmt.Fprintln(os.Stderr, "  mdcli --style=dracula notes.md")
-		fmt.Fprintln(os.Stderr, "  mdcli --output=out.txt file1.md file2.md")
-		fmt.Fprintln(os.Stderr, "  cat README.md | mdcli --style=light")
-		fmt.Fprintln(os.Stderr, "  mdcli --list-styles")
+		fmt.Fprintln(os.Stderr, "")
+		fmt.Fprintln(os.Stderr, headerStyle.Render("Examples:"))
+		fmt.Fprintln(os.Stderr, exampleStyle.Render("  mdcli README.md"))
+		fmt.Fprintln(os.Stderr, exampleStyle.Render("  mdcli --style=dracula notes.md"))
+		fmt.Fprintln(os.Stderr, exampleStyle.Render("  mdcli --output=out.txt file1.md file2.md"))
+		fmt.Fprintln(os.Stderr, exampleStyle.Render("  cat README.md | mdcli --style=light"))
+		fmt.Fprintln(os.Stderr, exampleStyle.Render("  mdcli --list-styles"))
 	}
 
 	versionFlag := flag.Bool("version", false, "Print version and exit")
