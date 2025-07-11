@@ -31,10 +31,6 @@ var availableStyles = []string{
 }
 
 func main() {
-	// Test: print a colored string to verify lipgloss color output
-	testStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("202"))
-	fmt.Println(testStyle.Render("[mdcli] If you see this in orange, color output works!"))
-
 	usageStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("205"))
 	headerStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("39"))
 	exampleStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("36"))
