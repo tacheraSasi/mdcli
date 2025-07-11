@@ -31,21 +31,26 @@ var availableStyles = []string{
 }
 
 func main() {
+	// Test: print a colored string to verify lipgloss color output
+	testStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("202"))
+	fmt.Println(testStyle.Render("[mdcli] If you see this in orange, color output works!"))
+
 	usageStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("205"))
 	headerStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("39"))
 	exampleStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("36"))
 
 	flag.Usage = func() {
-		fmt.Fprintln(os.Stderr, usageStyle.Render(fmt.Sprintf("Usage: %s [options] [file ...]", os.Args[0])))
-		fmt.Fprintln(os.Stderr, headerStyle.Render("Options:"))
+		fmt.Fprintln(os.Stdout, usageStyle.Render(fmt.Sprintf("Usage: %s [options] [file ...]", os.Args[0])))
+		fmt.Fprintln(os.Stdout, headerStyle.Render("Options:"))
+		flag.CommandLine.SetOutput(os.Stdout)
 		flag.PrintDefaults()
-		fmt.Fprintln(os.Stderr, "")
-		fmt.Fprintln(os.Stderr, headerStyle.Render("Examples:"))
-		fmt.Fprintln(os.Stderr, exampleStyle.Render("  mdcli README.md"))
-		fmt.Fprintln(os.Stderr, exampleStyle.Render("  mdcli --style=dracula notes.md"))
-		fmt.Fprintln(os.Stderr, exampleStyle.Render("  mdcli --output=out.txt file1.md file2.md"))
-		fmt.Fprintln(os.Stderr, exampleStyle.Render("  cat README.md | mdcli --style=light"))
-		fmt.Fprintln(os.Stderr, exampleStyle.Render("  mdcli --list-styles"))
+		fmt.Fprintln(os.Stdout, "")
+		fmt.Fprintln(os.Stdout, headerStyle.Render("Examples:"))
+		fmt.Fprintln(os.Stdout, exampleStyle.Render("  mdcli README.md"))
+		fmt.Fprintln(os.Stdout, exampleStyle.Render("  mdcli --style=dracula notes.md"))
+		fmt.Fprintln(os.Stdout, exampleStyle.Render("  mdcli --output=out.txt file1.md file2.md"))
+		fmt.Fprintln(os.Stdout, exampleStyle.Render("  cat README.md | mdcli --style=light"))
+		fmt.Fprintln(os.Stdout, exampleStyle.Render("  mdcli --list-styles"))
 	}
 
 	versionFlag := flag.Bool("version", false, "Print version and exit")
