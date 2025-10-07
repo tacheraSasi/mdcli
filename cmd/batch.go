@@ -128,7 +128,7 @@ func runBatch(cmd *cobra.Command, args []string) {
 		defer close(jobs)
 		for _, file := range markdownFiles {
 			relPath, _ := filepath.Rel(inputDir, file)
-			outputFile := filepath.Join(outputDir, 
+			outputFile := filepath.Join(outputDir,
 				strings.TrimSuffix(relPath, filepath.Ext(relPath))+batchExtension)
 
 			// Ensure output subdirectory exists

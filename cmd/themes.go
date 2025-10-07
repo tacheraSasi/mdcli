@@ -28,7 +28,7 @@ func runThemes(cmd *cobra.Command, args []string) {
 		fmt.Printf("\n📋 %s\n", strings.ToUpper(name))
 		fmt.Printf("   Name: %s\n", theme.Name)
 		fmt.Printf("   Description: %s\n", theme.Description)
-		
+
 		if verbose {
 			fmt.Printf("   Colors:\n")
 			fmt.Printf("     Primary: %s\n", theme.Colors.Primary)

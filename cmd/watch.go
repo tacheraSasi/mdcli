@@ -85,7 +85,7 @@ func runWatch(cmd *cobra.Command, args []string) {
 					if verbose {
 						fmt.Fprintf(os.Stderr, "File modified: %s\n", event.Name)
 					}
-					
+
 					// Add a small delay to avoid multiple rapid updates
 					time.Sleep(100 * time.Millisecond)
 					renderFiles(args)

@@ -3,8 +3,10 @@ package renderer
 import (
 	"bytes"
 	"os"
+	"strings"
 
 	"github.com/MichaelMure/go-term-markdown"
+	"github.com/tacheraSasi/mdcli/themes"
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark-highlighting"
 	"github.com/yuin/goldmark/extension"
@@ -31,11 +33,14 @@ func Render(opts RenderOptions) (string, error) {
 		opts.OutputFormat = "terminal"
 	}
 
+	// Get syntax highlighting style for theme
+	syntaxStyle := themes.GetSyntaxHighlightingStyle(opts.Theme)
+	
 	var md goldmark.Markdown
 	extensions := []goldmark.Extender{
 		extension.GFM,
 		highlighting.NewHighlighting(
-			highlighting.WithStyle(opts.Theme),
+			highlighting.WithStyle(syntaxStyle),
 		),
 	}
 
