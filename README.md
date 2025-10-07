@@ -2,12 +2,14 @@
 
 **mdcli** is a simple command-line tool for processing Markdown files.
 
-##  Features
+## Features
+
 - Accepts a Markdown file as an argument
 - Reads and processes the file
 - Supports flag-based and positional arguments
 
-##  Installation
+## Installation
+
 Clone the repository and build the project:
 
 ```sh
@@ -17,7 +19,7 @@ make build_(your os) #e.g build_linux
 go build -o mdcli
 ```
 
-##  Usage
+## Usage
 
 Run `mdcli` with a Markdown file as an argument:
 
@@ -32,11 +34,13 @@ or using a flag:
 ```
 
 ## ⚡ Example Output
+
 ```sh
 Processing file: filename.md
 ```
 
-##  License
+## License
+
 This project is licensed under the MIT License.
 
 ---
