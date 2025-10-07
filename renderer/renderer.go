@@ -5,34 +5,14 @@ import (
 	"os"
 	"strings"
 
-	"github.com/MichaelMure/go-term-markdown"
-	"github.com/litao91/goldmark-mathjax"
-	"github.com/tacheraSasi/mdcli/themes"
-	"github.com/yuin/goldmark"
-	"github.com/yuin/goldmark-highlighting"
-	"github.com/yuin/goldmark/extension"
-	"github.com/yuin/goldmark/parser"
-	"go.abhg.dev/goldmark/mermaid"
-	"github.com/litao91/goldmark-mathjax"
-	"github.com/tacheraSasi/mdcli/themes"
-	"github.com/yuin/goldmark"
-	"github.com/yuin/goldmark-highlighting"
-	"github.com/yuin/goldmark/extension"
-	"github.com/yuin/goldmark/parser"
-	"go.abhg.dev/goldmark/mermaid"
-)
-
-import (
-	"bytes"
-	"os"
-	"strings"
-
 	markdown "github.com/MichaelMure/go-term-markdown"
+	mathjax "github.com/litao91/goldmark-mathjax"
 	"github.com/tacheraSasi/mdcli/themes"
 	"github.com/yuin/goldmark"
 	highlighting "github.com/yuin/goldmark-highlighting"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
+	"go.abhg.dev/goldmark/mermaid"
 )
 
 type RenderOptions struct {
@@ -57,13 +37,15 @@ func Render(opts RenderOptions) (string, error) {
 
 	// Get syntax highlighting style for theme
 	syntaxStyle := themes.GetSyntaxHighlightingStyle(opts.Theme)
-
+	
 	var md goldmark.Markdown
 	extensions := []goldmark.Extender{
 		extension.GFM,
 		highlighting.NewHighlighting(
 			highlighting.WithStyle(syntaxStyle),
 		),
+		mathjax.MathJax,
+		&mermaid.Extender{},
 	}
 
 	if opts.Autolink {
@@ -105,7 +87,7 @@ func stripHTML(content string) string {
 	// Simple HTML tag removal - you might want to use a proper HTML parser
 	var result strings.Builder
 	inTag := false
-
+	
 	for _, char := range content {
 		if char == '<' {
 			inTag = true
@@ -115,7 +97,7 @@ func stripHTML(content string) string {
 			result.WriteRune(char)
 		}
 	}
-
+	
 	return result.String()
 }
 
