@@ -176,3 +176,34 @@ func runRender(cmd *cobra.Command, args []string) {
 		fmt.Print(outputStr)
 	}
 }
+
+// runRenderWithFlags is a helper function that allows rendering with explicit flag values
+// This is used by the root command for backward compatibility
+func runRenderWithFlags(cmd *cobra.Command, args []string, output, format, thm string, w int, autoLnk, progress bool) {
+	// Temporarily set the package-level variables to the provided values
+	originalOutput := outputFile
+	originalFormat := outputFormat
+	originalTheme := theme
+	originalWidth := width
+	originalAutolink := autolink
+	originalProgress := showProgress
+
+	// Set the values
+	outputFile = output
+	outputFormat = format
+	theme = thm
+	width = w
+	autolink = autoLnk
+	showProgress = progress
+
+	// Call the original render function
+	runRender(cmd, args)
+
+	// Restore the original values
+	outputFile = originalOutput
+	outputFormat = originalFormat
+	theme = originalTheme
+	width = originalWidth
+	autolink = originalAutolink
+	showProgress = originalProgress
+}

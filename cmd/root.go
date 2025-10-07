@@ -20,8 +20,17 @@ var rootCmd = &cobra.Command{
 	Short: "A powerful Markdown CLI processor and renderer",
 	Long: `mdcli is a feature-rich command-line tool for processing Markdown files.
 It supports multiple output formats, themes, live preview, batch processing,
-and many other advanced features to enhance your Markdown workflow.`,
+and many other advanced features to enhance your Markdown workflow.
+
+Usage:
+  mdcli [file.md]                 # Render file directly (legacy mode)
+  mdcli render [files...]         # Explicit render command
+  mdcli serve [file.md]           # Start live preview server
+  mdcli watch [file.md]           # Watch for changes
+  mdcli batch [directory]         # Process multiple files`,
 	Version: version,
+	Args:    cobra.ArbitraryArgs,
+	Run:     runRootCommand,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -32,6 +41,52 @@ func Execute() {
 	}
 }
 
+// runRootCommand handles direct file rendering for backward compatibility
+func runRootCommand(cmd *cobra.Command, args []string) {
+	if len(args) == 0 {
+		// No arguments provided, show help
+		cmd.Help()
+		return
+	}
+
+	// Check if any arguments look like subcommands
+	for _, arg := range args {
+		if isSubcommand(arg) {
+			// If the first argument is a known subcommand, let cobra handle it normally
+			// This shouldn't happen due to cobra's parsing, but just in case
+			fmt.Fprintf(os.Stderr, "Unknown command '%s'. Use 'mdcli help' for available commands.\n", arg)
+			os.Exit(1)
+		}
+	}
+
+	// All arguments should be files, delegate to render command
+	if verbose {
+		fmt.Fprintf(os.Stderr, "Legacy mode: rendering files directly\n")
+	}
+
+	// Get flag values from the root command and set them for render
+	outputFile, _ := cmd.Flags().GetString("output")
+	outputFormat, _ := cmd.Flags().GetString("format")
+	theme, _ := cmd.Flags().GetString("theme")
+	width, _ := cmd.Flags().GetInt("width")
+	autolink, _ := cmd.Flags().GetBool("autolink")
+	showProgress, _ := cmd.Flags().GetBool("progress")
+
+	// Call render function with a simulated render command context
+	runRenderWithFlags(cmd, args, outputFile, outputFormat, theme, width, autolink, showProgress)
+}
+
+// isSubcommand checks if a string matches any known subcommand
+func isSubcommand(arg string) bool {
+	subcommands := []string{"render", "serve", "watch", "batch", "interactive", "themes", "config", "help", "completion"}
+	for _, sub := range subcommands {
+		if arg == sub {
+			return true
+		}
+	}
+	return false
+}
+
 func init() {
 	cobra.OnInitialize(initConfig)
 
@@ -39,8 +94,21 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.mdcli.yaml)")
 	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "verbose output")
 
+	// Add common render flags to root command for backward compatibility
+	rootCmd.Flags().StringP("output", "o", "", "Output file path")
+	rootCmd.Flags().StringP("format", "f", "terminal", "Output format (terminal, html, pdf, text)")
+	rootCmd.Flags().StringP("theme", "t", "", "Syntax highlighting theme")
+	rootCmd.Flags().IntP("width", "w", 0, "Terminal width for formatting")
+	rootCmd.Flags().Bool("autolink", true, "Enable automatic link detection")
+	rootCmd.Flags().Bool("progress", false, "Show progress bar")
+
 	// Bind flags to viper
 	viper.BindPFlag("verbose", rootCmd.PersistentFlags().Lookup("verbose"))
+	viper.BindPFlag("output", rootCmd.Flags().Lookup("output"))
+	viper.BindPFlag("format", rootCmd.Flags().Lookup("format"))
+	viper.BindPFlag("theme", rootCmd.Flags().Lookup("theme"))
+	viper.BindPFlag("width", rootCmd.Flags().Lookup("width"))
+	viper.BindPFlag("autolink", rootCmd.Flags().Lookup("autolink"))
 }
 
 // initConfig reads in config file and ENV variables if set.
