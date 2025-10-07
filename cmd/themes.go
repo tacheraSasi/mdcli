@@ -21,11 +21,11 @@ func init() {
 }
 
 func runThemes(cmd *cobra.Command, args []string) {
-	fmt.Println("🎨 Available Themes:")
+	fmt.Println(" Available Themes:")
 	fmt.Println(strings.Repeat("=", 40))
 
 	for name, theme := range themes.AvailableThemes {
-		fmt.Printf("\n📋 %s\n", strings.ToUpper(name))
+		fmt.Printf("\n%s\n", strings.ToUpper(name))
 		fmt.Printf("   Name: %s\n", theme.Name)
 		fmt.Printf("   Description: %s\n", theme.Description)
 
@@ -39,6 +39,6 @@ func runThemes(cmd *cobra.Command, args []string) {
 	}
 
 	fmt.Println(strings.Repeat("-", 40))
-	fmt.Println("💡 Use --theme=<name> with render command to apply a theme")
-	fmt.Println("💡 Use --verbose to see color details")
+	fmt.Println("Use --theme=<name> with render command to apply a theme")
+	fmt.Println("Use --verbose to see color details")
 }

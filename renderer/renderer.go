@@ -5,6 +5,28 @@ import (
 	"os"
 	"strings"
 
+	"github.com/MichaelMure/go-term-markdown"
+	"github.com/litao91/goldmark-mathjax"
+	"github.com/tacheraSasi/mdcli/themes"
+	"github.com/yuin/goldmark"
+	"github.com/yuin/goldmark-highlighting"
+	"github.com/yuin/goldmark/extension"
+	"github.com/yuin/goldmark/parser"
+	"go.abhg.dev/goldmark/mermaid"
+	"github.com/litao91/goldmark-mathjax"
+	"github.com/tacheraSasi/mdcli/themes"
+	"github.com/yuin/goldmark"
+	"github.com/yuin/goldmark-highlighting"
+	"github.com/yuin/goldmark/extension"
+	"github.com/yuin/goldmark/parser"
+	"go.abhg.dev/goldmark/mermaid"
+)
+
+import (
+	"bytes"
+	"os"
+	"strings"
+
 	markdown "github.com/MichaelMure/go-term-markdown"
 	"github.com/tacheraSasi/mdcli/themes"
 	"github.com/yuin/goldmark"

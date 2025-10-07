@@ -59,6 +59,8 @@ func initConfig() {
 		viper.SetConfigName(".mdcli")
 	}
 
+	// Set environment variable prefix
+	viper.SetEnvPrefix("MDCLI")
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
@@ -71,4 +73,14 @@ func initConfig() {
 	viper.SetDefault("width", 80)
 	viper.SetDefault("output_format", "terminal")
 	viper.SetDefault("autolink", true)
+	viper.SetDefault("batch.concurrent_workers", 4)
+	viper.SetDefault("batch.output_extension", ".html")
+	viper.SetDefault("batch.recursive", true)
+	viper.SetDefault("serve.port", 8080)
+	viper.SetDefault("serve.bind", "localhost")
+	viper.SetDefault("serve.auto_reload", true)
+	viper.SetDefault("render.show_progress", true)
+	viper.SetDefault("render.include_metadata", false)
+	viper.SetDefault("watch.debounce_delay", 100)
+	viper.SetDefault("watch.clear_screen", true)
 }
