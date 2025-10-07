@@ -6,6 +6,8 @@
 
 **mdcli** is a powerful, feature-rich command-line tool for processing and rendering Markdown files with advanced capabilities including live preview, batch processing, multiple output formats, and extensive customization options.
 
+> **Backward Compatibility**: mdcli v2.0 maintains full backward compatibility. You can still use `mdcli file.md` directly without the `render` subcommand!
+
 ## ✨ Features
 
 ### 🎨 **Multiple Output Formats**
@@ -68,7 +70,13 @@ go build -o mdcli
 ### Basic Usage
 
 ```bash
-# Render a file to terminal
+# Simple rendering (backward compatible)
+./mdcli README.md
+
+# With flags (backward compatible)
+./mdcli README.md --theme=github --format=html
+
+# Explicit render command
 ./mdcli render README.md
 
 # Render with custom theme
