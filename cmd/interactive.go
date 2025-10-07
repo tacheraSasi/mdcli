@@ -45,13 +45,13 @@ func runInteractive(cmd *cobra.Command, args []string) {
 
 	for {
 		fmt.Print("mdcli> ")
-		
+
 		// Read multiple lines until EOF or empty line
 		buffer.Reset()
-		
+
 		for scanner.Scan() {
 			line := scanner.Text()
-			
+
 			// Handle special commands
 			if buffer.Len() == 0 {
 				switch strings.ToLower(strings.TrimSpace(line)) {
@@ -66,12 +66,12 @@ func runInteractive(cmd *cobra.Command, args []string) {
 					continue
 				}
 			}
-			
+
 			if line == "" && buffer.Len() > 0 {
 				// Empty line signals end of input
 				break
 			}
-			
+
 			if buffer.Len() > 0 {
 				buffer.WriteString("\n")
 			}
