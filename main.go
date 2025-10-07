@@ -7,46 +7,26 @@ import (
 	"os"
 	"strings"
 
-	"github.com/charmbracelet/lipgloss"
 	"github.com/tacheraSasi/mdcli/renderer"
 )
 
 var (
-	version    = "1.0.0"
-	style      = flag.String("style", "dark", "Style to use for rendering")
-	output     = flag.String("output", "", "Write rendered output to file (default: stdout)")
-	listStyles = flag.Bool("list-styles", false, "List available styles and exit")
+	version  = "1.0.0"
+	output   = flag.String("output", "", "Write rendered output to file (default: stdout)")
+	autolink = flag.Bool("autolink", true, "Enable or disable autolinking")
 )
 
-var availableStyles = []string{
-	"dark",
-	"light",
-	"notty",
-	"pink",
-	"solarized-dark",
-	"solarized-light",
-	"dracula",
-	"no-color",
-	"auto",
-}
-
 func main() {
-	usageStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("205"))
-	headerStyle := lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("39"))
-	exampleStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("36"))
-
 	flag.Usage = func() {
-		fmt.Fprintln(os.Stdout, usageStyle.Render(fmt.Sprintf("Usage: %s [options] [file ...]", "mdcli")))
-		fmt.Fprintln(os.Stdout, headerStyle.Render("Options:"))
+		fmt.Fprintf(os.Stdout, "Usage: %s [options] [file ...]\n", "mdcli")
+		fmt.Fprintln(os.Stdout, "Options:")
 		flag.CommandLine.SetOutput(os.Stdout)
 		flag.PrintDefaults()
 		fmt.Fprintln(os.Stdout, "")
-		fmt.Fprintln(os.Stdout, headerStyle.Render("Examples:"))
-		fmt.Fprintln(os.Stdout, exampleStyle.Render("  mdcli README.md"))
-		fmt.Fprintln(os.Stdout, exampleStyle.Render("  mdcli --style=dracula notes.md"))
-		fmt.Fprintln(os.Stdout, exampleStyle.Render("  mdcli --output=out.txt file1.md file2.md"))
-		fmt.Fprintln(os.Stdout, exampleStyle.Render("  cat README.md | mdcli --style=light"))
-		fmt.Fprintln(os.Stdout, exampleStyle.Render("  mdcli --list-styles"))
+		fmt.Fprintln(os.Stdout, "Examples:")
+		fmt.Fprintln(os.Stdout, "  mdcli README.md")
+		fmt.Fprintln(os.Stdout, "  mdcli --output=out.txt file1.md file2.md")
+		fmt.Fprintln(os.Stdout, "  cat README.md | mdcli")
 	}
 
 	versionFlag := flag.Bool("version", false, "Print version and exit")
@@ -54,14 +34,6 @@ func main() {
 
 	if *versionFlag {
 		fmt.Println(version)
-		return
-	}
-
-	if *listStyles {
-		fmt.Println("Available styles:")
-		for _, s := range availableStyles {
-			fmt.Println("  -", s)
-		}
 		return
 	}
 
@@ -99,7 +71,10 @@ func run() error {
 
 	var renderedAll []string
 	for idx, input := range inputs {
-		rendered, err := renderer.Render(input, *style)
+		rendered, err := renderer.Render(renderer.RenderOptions{
+			Input:    input,
+			Autolink: *autolink,
+		})
 		if err != nil {
 			return fmt.Errorf("error rendering markdown for %s: %w", func() string {
 				if len(filenames) > idx {

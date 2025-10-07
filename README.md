@@ -40,4 +40,3 @@ Processing file: filename.md
 This project is licensed under the MIT License.
 
 ---
-Made with ❤️ in Go by ***Tachera SASI***.
