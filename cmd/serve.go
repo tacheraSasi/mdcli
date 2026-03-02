@@ -8,10 +8,12 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/a-h/templ"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/cobra"
 	"github.com/tacheraSasi/mdcli/renderer"
 	"github.com/tacheraSasi/mdcli/themes"
+	views "github.com/tacheraSasi/mdcli/ui"
 )
 
 var serveCmd = &cobra.Command{
@@ -621,21 +623,13 @@ func runServe(cmd *cobra.Command, args []string) {
 	}
 
 	// Setup HTTP handlers
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-
-		data := PreviewData{
-			Title:      filepath.Base(currentFile),
-			Content:    template.HTML(cachedContent),
-			Theme:      theme,
-			AutoReload: serveReload,
-		}
-
-		if err := previewTemplate.Execute(w, data); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-	})
+    data := PreviewData{
+        Title:      filepath.Base(currentFile),
+        Content:    template.HTML(cachedContent),
+        Theme:      theme,
+        AutoReload: serveReload,
+    }
+	http.Handle("/", templ.Handler(views.Serve(data)))
 
 	http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
