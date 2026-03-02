@@ -8,7 +8,7 @@ tasks:
   templ:
     desc: Run templ with integrated server and hot reload
     cmds:
-      - templ generate --watch --proxy="http://localhost:8090" --cmd="go run ./main.go serve README.md" --open-browser=false
+      - templ generate --watch --proxy="http://localhost:8090" --cmd="go run ./main.go serve  README.md " --open-browser=false
   tailwind:
     desc: Watch Tailwind CSS changes
     cmds:
