@@ -1,7 +1,9 @@
 package cmd
 
 import (
+	"embed"
 	"fmt"
+	"io/fs"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -13,6 +15,9 @@ import (
 	"github.com/tacheraSasi/mdcli/renderer"
 	views "github.com/tacheraSasi/mdcli/ui"
 )
+
+// AssetsFS is set from main to provide embedded assets.
+var AssetsFS embed.FS
 
 var serveCmd = &cobra.Command{
 	Use:   "serve [file]",
@@ -70,8 +75,9 @@ func runServe(cmd *cobra.Command, args []string) {
 		go startFileWatcher()
 	}
 
-	// Serve static assets (CSS, JS)
-	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
+	// Serve static assets from embedded FS
+	assetsSubFS, _ := fs.Sub(AssetsFS, "assets")
+	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.FS(assetsSubFS))))
 
 	// Main page handler – re-renders the templ component on each request
 	// so file changes are picked up via cachedContent
