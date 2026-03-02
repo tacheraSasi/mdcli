@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"html/template"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -12,7 +11,6 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/cobra"
 	"github.com/tacheraSasi/mdcli/renderer"
-	"github.com/tacheraSasi/mdcli/themes"
 	views "github.com/tacheraSasi/mdcli/ui"
 )
 
@@ -61,21 +59,6 @@ func runServe(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
-	// Parse template
-	var err error
-	previewTemplate, err = template.New("preview").Parse(htmlTemplate)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error parsing template: %v\n", err)
-		os.Exit(1)
-	}
-
-	// Get theme
-	theme, err := themes.GetTheme(serveTheme)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Theme error: %v\n", err)
-		os.Exit(1)
-	}
-
 	// Initial render
 	if err := renderCurrentFile(); err != nil {
 		fmt.Fprintf(os.Stderr, "Initial render error: %v\n", err)
@@ -87,23 +70,20 @@ func runServe(cmd *cobra.Command, args []string) {
 		go startFileWatcher()
 	}
 
-	// Setup HTTP handlers
-	data := PreviewData{
-		Title:      filepath.Base(currentFile),
-		Content:    template.HTML(cachedContent),
-		Theme:      theme,
-		AutoReload: serveReload,
-	}
-	http.Handle("/", templ.Handler(views.Serve(data)))
+	// Serve static assets (CSS, JS)
+	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 
-	http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprintf(w, `{"lastModified": %d}`, lastModTime.Unix())
+	// Main page handler – re-renders the templ component on each request
+	// so file changes are picked up via cachedContent
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		data := views.ServeData{
+			Title:      filepath.Base(currentFile),
+			Content:    cachedContent,
+			ThemeName:  serveTheme,
+			AutoReload: serveReload,
+		}
+		templ.Handler(views.ServePage(data)).ServeHTTP(w, r)
 	})
-
-	addr := fmt.Sprintf("%s:%d", serveBind, servePort)
-	fmt.Printf("🚀 Starting live preview server...\n")
-	fmt.Printf("📄 File: %s\n", currentFile)
 	fmt.Printf("🌐 URL: http://%s\n", addr)
 	fmt.Printf("🎨 Theme: %s\n", serveTheme)
 	if serveReload {
