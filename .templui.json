@@ -1,0 +1,7 @@
+{
+  "componentsDir": "components",
+  "utilsDir": "utils",
+  "moduleName": "github.com/tacheraSasi/mdcli",
+  "jsDir": "assets/js",
+  "jsPublicPath": "/assets/js"
+}
