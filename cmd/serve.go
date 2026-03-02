@@ -84,6 +84,15 @@ func runServe(cmd *cobra.Command, args []string) {
 		}
 		templ.Handler(views.ServePage(data)).ServeHTTP(w, r)
 	})
+
+	http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprintf(w, `{"lastModified": %d}`, lastModTime.Unix())
+	})
+
+	addr := fmt.Sprintf("%s:%d", serveBind, servePort)
+	fmt.Printf("🚀 Starting live preview server...\n")
+	fmt.Printf("📄 File: %s\n", currentFile)
 	fmt.Printf("🌐 URL: http://%s\n", addr)
 	fmt.Printf("🎨 Theme: %s\n", serveTheme)
 	if serveReload {
