@@ -59,7 +59,7 @@ func ServePage(data ServeData) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " – mdcli Preview</title><link rel=\"stylesheet\" href=\"/assets/css/output.css\"><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css\"><script src=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js\"></script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " – mdcli Preview</title><link rel=\"icon\" type=\"image/x-icon\" href=\"/assets/icons/favicon.ico\"><link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/assets/icons/apple-touch-icon.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"192x192\" href=\"/assets/icons/icon-192.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"512x512\" href=\"/assets/icons/icon-512.png\"><link rel=\"stylesheet\" href=\"/assets/css/output.css\"><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css\"><script src=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js\"></script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -278,7 +278,7 @@ func docHeader(data ServeData) templ.Component {
 					var templ_7745c5c3_Var10 string
 					templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(data.Title)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `ui/serve.templ`, Line: 87, Col: 16}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `ui/serve.templ`, Line: 91, Col: 16}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 					if templ_7745c5c3_Err != nil {
@@ -385,7 +385,7 @@ func docHeader(data ServeData) templ.Component {
 						var templ_7745c5c3_Var15 string
 						templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(data.ThemeName)
 						if templ_7745c5c3_Err != nil {
-							return templ.Error{Err: templ_7745c5c3_Err, FileName: `ui/serve.templ`, Line: 101, Col: 29}
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `ui/serve.templ`, Line: 105, Col: 29}
 						}
 						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 						if templ_7745c5c3_Err != nil {
