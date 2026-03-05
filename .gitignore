@@ -18,6 +18,7 @@ go.work.sum
 # env file
 .env
 
-bin/*
+bin/
+build/
 
 node_modules
