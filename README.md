@@ -53,18 +53,56 @@
 
 ### Installation
 
+#### From Source
+
 ```bash
-# Clone the repository
 git clone https://github.com/tacheraSasi/mdcli.git
 cd mdcli
+make build
+```
 
-# Build for your platform
-make build_linux    # Linux
-make build_mac      # macOS
-make build_windows  # Windows
+#### macOS (Apple Silicon)
 
-# Or build directly with Go
-go build -o mdcli
+```bash
+curl -L https://github.com/tacheraSasi/mdcli/releases/latest/download/mdcli-darwin-arm64.tar.gz -o mdcli-darwin-arm64.tar.gz
+sudo tar -C /usr/local/bin -xzf mdcli-darwin-arm64.tar.gz
+rm mdcli-darwin-arm64.tar.gz
+```
+
+#### macOS (Intel)
+
+```bash
+curl -L https://github.com/tacheraSasi/mdcli/releases/latest/download/mdcli-darwin-amd64.tar.gz -o mdcli-darwin-amd64.tar.gz
+sudo tar -C /usr/local/bin -xzf mdcli-darwin-amd64.tar.gz
+rm mdcli-darwin-amd64.tar.gz
+```
+
+#### Linux (amd64)
+
+```bash
+curl -L https://github.com/tacheraSasi/mdcli/releases/latest/download/mdcli-linux-amd64.tar.gz -o mdcli-linux-amd64.tar.gz
+sudo tar -C /usr/local/bin -xzf mdcli-linux-amd64.tar.gz
+rm mdcli-linux-amd64.tar.gz
+```
+
+#### Linux (arm64)
+
+```bash
+curl -L https://github.com/tacheraSasi/mdcli/releases/latest/download/mdcli-linux-arm64.tar.gz -o mdcli-linux-arm64.tar.gz
+sudo tar -C /usr/local/bin -xzf mdcli-linux-arm64.tar.gz
+rm mdcli-linux-arm64.tar.gz
+```
+
+#### Windows
+
+Download the latest `.zip` from the [releases page](https://github.com/tacheraSasi/mdcli/releases), extract it, and add `mdcli.exe` to your PATH.
+
+#### Android (Termux)
+
+```bash
+curl -L https://github.com/tacheraSasi/mdcli/releases/latest/download/mdcli-android-arm64.tar.gz -o mdcli-android-arm64.tar.gz
+tar -xzf mdcli-android-arm64.tar.gz -C $PREFIX/bin
+rm mdcli-android-arm64.tar.gz
 ```
 
 ### Basic Usage
@@ -105,25 +143,25 @@ go build -o mdcli
 
 ### Core Commands
 
-| Command | Description | Example |
-|---------|-------------|---------|
-| `render` | Render Markdown files | `mdcli render file.md` |
-| `serve` | Start live preview server | `mdcli serve file.md` |
-| `watch` | Watch files for changes | `mdcli watch file.md` |
-| `batch` | Process multiple files | `mdcli batch ./docs` |
-| `interactive` | Interactive editor mode | `mdcli interactive` |
-| `themes` | List available themes | `mdcli themes` |
-| `config` | Manage configuration | `mdcli config show` |
+| Command       | Description               | Example                |
+| ------------- | ------------------------- | ---------------------- |
+| `render`      | Render Markdown files     | `mdcli render file.md` |
+| `serve`       | Start live preview server | `mdcli serve file.md`  |
+| `watch`       | Watch files for changes   | `mdcli watch file.md`  |
+| `batch`       | Process multiple files    | `mdcli batch ./docs`   |
+| `interactive` | Interactive editor mode   | `mdcli interactive`    |
+| `themes`      | List available themes     | `mdcli themes`         |
+| `config`      | Manage configuration      | `mdcli config show`    |
 
 ### Global Flags
 
-| Flag | Description | Default |
-|------|-------------|---------|
-| `--config` | Config file path | `~/.mdcli.yaml` |
-| `--verbose` | Verbose output | `false` |
-| `--theme` | Syntax theme | `dracula` |
-| `--format` | Output format | `terminal` |
-| `--width` | Terminal width | `80` |
+| Flag        | Description      | Default         |
+| ----------- | ---------------- | --------------- |
+| `--config`  | Config file path | `~/.mdcli.yaml` |
+| `--verbose` | Verbose output   | `false`         |
+| `--theme`   | Syntax theme     | `dracula`       |
+| `--format`  | Output format    | `terminal`      |
+| `--width`   | Terminal width   | `80`            |
 
 ### Render Command Options
 
@@ -227,13 +265,13 @@ mdcli render README.md
 
 mdcli includes several professionally designed built-in themes:
 
-| Theme | Description | Best For |
-|-------|-------------|----------|
-| **Dracula** | Dark theme with purple accents | Dark mode environments |
-| **GitHub** | Light theme inspired by GitHub | Documentation |
-| **Monokai** | Dark theme with vibrant colors | Code-heavy documents |
-| **Solarized** | Balanced light/dark theme | Visual comfort |
-| **Nord** | Arctic, north-bluish palette | Modern interfaces |
+| Theme         | Description                    | Best For               |
+| ------------- | ------------------------------ | ---------------------- |
+| **Dracula**   | Dark theme with purple accents | Dark mode environments |
+| **GitHub**    | Light theme inspired by GitHub | Documentation          |
+| **Monokai**   | Dark theme with vibrant colors | Code-heavy documents   |
+| **Solarized** | Balanced light/dark theme      | Visual comfort         |
+| **Nord**      | Arctic, north-bluish palette   | Modern interfaces      |
 
 ```bash
 # List all available themes
@@ -253,6 +291,7 @@ Supports LaTeX math equations via MathJax:
 Inline math: $E = mc^2$
 
 Block math:
+
 $$
 \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
 $$
@@ -262,14 +301,14 @@ $$
 
 Native support for flowcharts and diagrams:
 
-```markdown
+````markdown
 \```mermaid
 graph TD
-    A[Start] --> B{Decision}
-    B -->|Yes| C[Action 1]
-    B -->|No| D[Action 2]
+A[Start] --> B{Decision}
+B -->|Yes| C[Action 1]
+B -->|No| D[Action 2]
 \```
-```
+````
 
 ### Live Preview
 
@@ -293,15 +332,19 @@ mdcli serve README.md --port=8080
 
 ```bash
 # Build for the current platform
-go build -o mdcli
-
-# Build for all platforms via Makefile
 make build
 
-# Optimized binaries
-make build_linux
-make build_mac
-make build_windows
+# Build for all platforms
+make build-all
+
+# Individual platform builds
+make build-darwin    # macOS (arm64 + amd64)
+make build-linux     # Linux (amd64 + arm64)
+make build-windows   # Windows (amd64 + arm64)
+make build-android   # Android (arm64)
+
+# Create a GitHub release with all binaries
+make release
 ```
 
 ## Contributing
@@ -311,6 +354,7 @@ Contributions are welcome. Please refer to the [Contributing Guidelines](CONTRIB
 ## Changelog
 
 ### v2.0.0
+
 - Complete migration to the Cobra CLI framework
 - Support for multiple output formats (HTML, PDF, Text)
 - Enhanced theme system with 5 built-in options
@@ -320,6 +364,7 @@ Contributions are welcome. Please refer to the [Contributing Guidelines](CONTRIB
 - Comprehensive YAML-based configuration
 
 ### v1.0.0
+
 - Initial release with basic Markdown rendering
 - Terminal output support
 
