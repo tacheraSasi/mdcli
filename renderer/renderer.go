@@ -74,8 +74,6 @@ func Render(opts RenderOptions) (string, error) {
 		return buf.String(), nil
 	case "text", "plain":
 		return stripHTML(buf.String()), nil
-	case "pdf":
-		return renderToPDF(buf.String())
 	default: // terminal
 		result := markdown.Render(buf.String(), opts.Width, 6)
 		return string(result), nil
@@ -101,12 +99,6 @@ func stripHTML(content string) string {
 	return result.String()
 }
 
-// renderToPDF converts HTML to PDF (simplified implementation)
-func renderToPDF(htmlContent string) (string, error) {
-	// This is a placeholder for PDF rendering
-	// In a real implementation, you'd use a library like wkhtmltopdf or similar
-	return "PDF rendering not implemented in this version", nil
-}
 
 func ReadFile(file string) (string, error) {
 	// Reading file
