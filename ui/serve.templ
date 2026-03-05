@@ -8,12 +8,23 @@ import (
 	"github.com/tacheraSasi/mdcli/components/separator"
 )
 
+// FileEntry represents a file or directory in the file tree.
+type FileEntry struct {
+	Name     string
+	Path     string // relative URL path
+	IsDir    bool
+	Children []FileEntry
+}
+
 // ServeData holds typed data for the serve preview page.
 type ServeData struct {
-	Title      string
-	Content    string
-	ThemeName  string
-	AutoReload bool
+	Title           string
+	Content         string
+	ThemeName       string
+	AutoReload      bool
+	IsDirectoryMode bool
+	CurrentPath     string
+	Files           []FileEntry
 }
 
 // ServePage renders the full HTML page for the live preview.
@@ -39,8 +50,12 @@ templ ServePage(data ServeData) {
 			<!-- Live indicator badge -->
 			@liveIndicator()
 			<div class="flex min-h-screen">
-				<!-- Sidebar / Table of Contents -->
-				@tocSidebar()
+					<!-- Sidebar -->
+				if data.IsDirectoryMode {
+					@fileTreeSidebar(data)
+				} else {
+					@tocSidebar()
+				}
 				<!-- Main content area -->
 				<main class="flex-1 max-w-4xl mx-auto px-6 py-8">
 					@docHeader(data)
@@ -70,7 +85,69 @@ templ liveIndicator() {
 	</div>
 }
 
-// tocSidebar renders the table of contents sidebar.
+// fileTreeSidebar renders the file navigation sidebar in directory mode.
+templ fileTreeSidebar(data ServeData) {
+	<aside id="toc" class="hidden lg:block w-64 shrink-0 sticky top-0 h-screen overflow-y-auto border-r bg-card p-6">
+		<div class="flex items-center gap-2 mb-4">
+			@icon.Folder(icon.Props{Size: 18})
+			<h3 class="text-sm font-semibold text-card-foreground">Files</h3>
+		</div>
+		<nav>
+			<ul class="space-y-0.5 text-sm text-muted-foreground">
+				for _, entry := range data.Files {
+					@fileTreeEntry(entry, data.CurrentPath)
+				}
+			</ul>
+		</nav>
+		<!-- TOC placeholder for JS (hidden in file tree mode) -->
+		<div class="mt-6 pt-4 border-t">
+			<div class="flex items-center gap-2 mb-3">
+				@icon.List(icon.Props{Size: 16})
+				<h4 class="text-xs font-semibold text-muted-foreground uppercase tracking-wide">On this page</h4>
+			</div>
+			<ul id="toc-list" class="space-y-1 text-sm text-muted-foreground"></ul>
+		</div>
+	</aside>
+}
+
+// fileTreeEntry renders a single file or directory entry in the tree.
+templ fileTreeEntry(entry FileEntry, currentPath string) {
+	<li>
+		if entry.IsDir {
+			<details open>
+				<summary class="flex items-center gap-1.5 py-1 px-2 rounded-md hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors">
+					@icon.Folder(icon.Props{Size: 14})
+					<span>{ entry.Name }</span>
+				</summary>
+				<ul class="ml-3 pl-3 border-l space-y-0.5">
+					for _, child := range entry.Children {
+						@fileTreeEntry(child, currentPath)
+					}
+				</ul>
+			</details>
+		} else {
+			if entry.Path == currentPath {
+				<a
+					href={ templ.URL("/" + entry.Path) }
+					class="flex items-center gap-1.5 py-1 px-2 rounded-md bg-accent text-accent-foreground font-medium transition-colors"
+				>
+					@icon.FileText(icon.Props{Size: 14})
+					<span>{ entry.Name }</span>
+				</a>
+			} else {
+				<a
+					href={ templ.URL("/" + entry.Path) }
+					class="flex items-center gap-1.5 py-1 px-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
+				>
+					@icon.FileText(icon.Props{Size: 14})
+					<span>{ entry.Name }</span>
+				</a>
+			}
+		}
+	</li>
+}
+
+// tocSidebar renders the table of contents sidebar (single file mode).
 templ tocSidebar() {
 	<aside id="toc" class="hidden lg:block w-64 shrink-0 sticky top-0 h-screen overflow-y-auto border-r bg-card p-6">
 		<div class="flex items-center gap-2 mb-4">
@@ -219,49 +296,51 @@ templ pageScripts() {
 			const tocList = document.getElementById('toc-list');
 			const headings = document.querySelectorAll('#article-content h1, #article-content h2, #article-content h3, #article-content h4');
 
-			if (headings.length > 0) {
-				headings.forEach((heading, index) => {
-					if (!heading.id) {
-						heading.id = heading.tagName.toLowerCase() + '-' + index;
-					}
-					const li = document.createElement('li');
-					const level = parseInt(heading.tagName[1]);
-					const indent = (level - 1) * 12;
-					li.style.paddingLeft = indent + 'px';
-					li.className = 'rounded-md';
-					const a = document.createElement('a');
-					a.href = '#' + heading.id;
-					a.textContent = heading.textContent;
-					a.className = 'block py-1 px-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors';
-					li.appendChild(a);
-					tocList.appendChild(li);
-				});
-			} else {
-				tocList.innerHTML = '<li class="text-muted-foreground italic text-xs px-2">No headings</li>';
-			}
+			if (tocList) {
+				if (headings.length > 0) {
+					headings.forEach((heading, index) => {
+						if (!heading.id) {
+							heading.id = heading.tagName.toLowerCase() + '-' + index;
+						}
+						const li = document.createElement('li');
+						const level = parseInt(heading.tagName[1]);
+						const indent = (level - 1) * 12;
+						li.style.paddingLeft = indent + 'px';
+						li.className = 'rounded-md';
+						const a = document.createElement('a');
+						a.href = '#' + heading.id;
+						a.textContent = heading.textContent;
+						a.className = 'block py-1 px-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors';
+						li.appendChild(a);
+						tocList.appendChild(li);
+					});
+				} else {
+					tocList.innerHTML = '<li class="text-muted-foreground italic text-xs px-2">No headings</li>';
+				}
 
-			// Highlight active TOC item on scroll
-			function setActiveTOC() {
-				const scrollPos = window.scrollY + 100;
-				let current = null;
-				for (let i = headings.length - 1; i >= 0; i--) {
-					if (headings[i].offsetTop <= scrollPos) {
-						current = headings[i];
-						break;
+				// Highlight active TOC item on scroll
+				function setActiveTOC() {
+					const scrollPos = window.scrollY + 100;
+					let current = null;
+					for (let i = headings.length - 1; i >= 0; i--) {
+						if (headings[i].offsetTop <= scrollPos) {
+							current = headings[i];
+							break;
+						}
+					}
+					tocList.querySelectorAll('a').forEach(a => {
+						a.classList.remove('bg-accent', 'text-accent-foreground', 'font-medium');
+					});
+					if (current) {
+						const activeLink = tocList.querySelector('a[href="#' + current.id + '"]');
+						if (activeLink) {
+							activeLink.classList.add('bg-accent', 'text-accent-foreground', 'font-medium');
+						}
 					}
 				}
-				tocList.querySelectorAll('a').forEach(a => {
-					a.classList.remove('bg-accent', 'text-accent-foreground', 'font-medium');
-				});
-				if (current) {
-					const activeLink = tocList.querySelector('a[href="#' + current.id + '"]');
-					if (activeLink) {
-						activeLink.classList.add('bg-accent', 'text-accent-foreground', 'font-medium');
-					}
-				}
+				window.addEventListener('scroll', setActiveTOC);
+				setActiveTOC();
 			}
-			window.addEventListener('scroll', setActiveTOC);
-			setActiveTOC();
 
 			// ========== COPY CODE BUTTONS ==========
 			document.querySelectorAll('#article-content pre').forEach(pre => {
