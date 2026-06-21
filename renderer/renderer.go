@@ -82,7 +82,6 @@ func Render(opts RenderOptions) (string, error) {
 
 // stripHTML removes HTML tags from content for plain text output
 func stripHTML(content string) string {
-	// Simple HTML tag removal - you might want to use a proper HTML parser
 	var result strings.Builder
 	inTag := false
 	
