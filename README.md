@@ -1,4 +1,4 @@
-# MDCLI v2.0 - Advanced Markdown CLI Processor
+# MDCLI v2.0 -> Advanced Markdown CLI Processor
 
 [![Go Version](https://img.shields.io/badge/Go-1.24+-blue.svg)](https://golang.org)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)

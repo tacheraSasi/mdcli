@@ -46,21 +46,24 @@ templ ServePage(data ServeData) {
 				@autoReloadScript()
 			}
 		</head>
-		<body class="bg-background text-foreground min-h-screen">
+		<body class="bg-background text-foreground min-h-screen flex flex-col">
 			<!-- Live indicator badge -->
 			@liveIndicator()
-			<div class="flex min-h-screen">
-					<!-- Sidebar -->
+			<div class="flex flex-1 min-h-0">
+				<!-- Sidebar -->
 				if data.IsDirectoryMode {
 					@fileTreeSidebar(data)
 				} else {
 					@tocSidebar()
 				}
 				<!-- Main content area -->
-				<main class="flex-1 max-w-4xl mx-auto px-6 py-8">
-					@docHeader(data)
-					@separator.Separator(separator.Props{Class: "my-6"})
-					@articleContent(data)
+				<main class="flex-1 flex flex-col min-w-0">
+					<div class="flex-1 max-w-4xl mx-auto px-6 py-8 w-full">
+						@docHeader(data)
+						@separator.Separator(separator.Props{Class: "my-6"})
+						@articleContent(data)
+					</div>
+					@footerCredits()
 				</main>
 			</div>
 			<!-- Floating action buttons -->
@@ -87,25 +90,34 @@ templ liveIndicator() {
 
 // fileTreeSidebar renders the file navigation sidebar in directory mode.
 templ fileTreeSidebar(data ServeData) {
-	<aside id="toc" class="hidden lg:block w-64 shrink-0 sticky top-0 h-screen overflow-y-auto border-r bg-card p-6">
-		<div class="flex items-center gap-2 mb-4">
-			@icon.Folder(icon.Props{Size: 18})
-			<h3 class="text-sm font-semibold text-card-foreground">Files</h3>
-		</div>
-		<nav>
-			<ul class="space-y-0.5 text-sm text-muted-foreground">
-				for _, entry := range data.Files {
-					@fileTreeEntry(entry, data.CurrentPath)
-				}
-			</ul>
-		</nav>
-		<!-- TOC placeholder for JS (hidden in file tree mode) -->
-		<div class="mt-6 pt-4 border-t">
-			<div class="flex items-center gap-2 mb-3">
-				@icon.List(icon.Props{Size: 16})
-				<h4 class="text-xs font-semibold text-muted-foreground uppercase tracking-wide">On this page</h4>
+	<aside id="toc" class="sidebar hidden lg:block w-64 shrink-0 sticky top-0 h-screen overflow-y-auto border-r border-border bg-card p-4 transition-all duration-300 ease-in-out">
+		<div class="flex items-center justify-between mb-4">
+			<div class="flex items-center gap-2 truncate sidebar-header-text">
+				@icon.Folder(icon.Props{Size: 18})
+				<h3 class="text-sm font-semibold text-card-foreground">Files</h3>
 			</div>
-			<ul id="toc-list" class="space-y-1 text-sm text-muted-foreground"></ul>
+			<button id="sidebar-collapse-btn" class="rounded-md p-1.5 hover:bg-accent hover:text-accent-foreground transition-colors shrink-0 cursor-pointer" type="button" aria-label="Toggle sidebar" title="Toggle sidebar">
+				<span id="sidebar-collapse-icon" class="inline-flex transition-transform duration-300">
+					@icon.ChevronLeft(icon.Props{Size: 16})
+				</span>
+			</button>
+		</div>
+		<div id="sidebar-body">
+			<nav>
+				<ul class="space-y-0.5 text-sm text-muted-foreground">
+					for _, entry := range data.Files {
+						@fileTreeEntry(entry, data.CurrentPath)
+					}
+				</ul>
+			</nav>
+			<!-- TOC placeholder for JS (hidden in file tree mode) -->
+			<div class="mt-6 pt-4 border-t border-border">
+				<div class="flex items-center gap-2 mb-3">
+					@icon.List(icon.Props{Size: 16})
+					<h4 class="text-xs font-semibold text-muted-foreground uppercase tracking-wide">On this page</h4>
+				</div>
+				<ul id="toc-list" class="space-y-1 text-sm text-muted-foreground"></ul>
+			</div>
 		</div>
 	</aside>
 }
@@ -119,7 +131,7 @@ templ fileTreeEntry(entry FileEntry, currentPath string) {
 					@icon.Folder(icon.Props{Size: 14})
 					<span>{ entry.Name }</span>
 				</summary>
-				<ul class="ml-3 pl-3 border-l space-y-0.5">
+				<ul class="ml-3 pl-3 border-l border-border space-y-0.5">
 					for _, child := range entry.Children {
 						@fileTreeEntry(child, currentPath)
 					}
@@ -149,14 +161,23 @@ templ fileTreeEntry(entry FileEntry, currentPath string) {
 
 // tocSidebar renders the table of contents sidebar (single file mode).
 templ tocSidebar() {
-	<aside id="toc" class="hidden lg:block w-64 shrink-0 sticky top-0 h-screen overflow-y-auto border-r bg-card p-6">
-		<div class="flex items-center gap-2 mb-4">
-			@icon.List(icon.Props{Size: 18})
-			<h3 class="text-sm font-semibold text-card-foreground">Contents</h3>
+	<aside id="toc" class="sidebar hidden lg:block w-64 shrink-0 sticky top-0 h-screen overflow-y-auto border-r border-border bg-card p-4 transition-all duration-300 ease-in-out">
+		<div class="flex items-center justify-between mb-4">
+			<div class="flex items-center gap-2 truncate sidebar-header-text">
+				@icon.List(icon.Props{Size: 18})
+				<h3 class="text-sm font-semibold text-card-foreground">Contents</h3>
+			</div>
+			<button id="sidebar-collapse-btn" class="rounded-md p-1.5 hover:bg-accent hover:text-accent-foreground transition-colors shrink-0 cursor-pointer" type="button" aria-label="Toggle sidebar" title="Toggle sidebar">
+				<span id="sidebar-collapse-icon" class="inline-flex transition-transform duration-300">
+					@icon.ChevronLeft(icon.Props{Size: 16})
+				</span>
+			</button>
 		</div>
-		<nav>
-			<ul id="toc-list" class="space-y-1 text-sm text-muted-foreground"></ul>
-		</nav>
+		<div id="sidebar-body">
+			<nav>
+				<ul id="toc-list" class="space-y-1 text-sm text-muted-foreground"></ul>
+			</nav>
+		</div>
 	</aside>
 }
 
@@ -207,6 +228,25 @@ templ articleContent(data ServeData) {
 	</article>
 }
 
+// footerCredits renders the footer with attribution and GitHub link.
+templ footerCredits() {
+	<footer class="border-t border-border bg-card/50 py-8">
+		<div class="max-w-4xl mx-auto px-6 text-center">
+			<p class="text-sm text-muted-foreground">
+				Created with <span class="text-red-500">&#9829;</span> by
+				<a href="https://github.com/tacheraSasi" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline font-medium">
+					Tachera Sasi
+				</a>
+			</p>
+			<a href="https://github.com/tacheraSasi/mdcli" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors mt-2">
+				@icon.Github(icon.Props{Size: 14})
+				<span>tacheraSasi/mdcli</span>
+				@icon.ExternalLink(icon.Props{Size: 10})
+			</a>
+		</div>
+	</footer>
+}
+
 // floatingActions renders the floating action buttons.
 templ floatingActions() {
 	<div class="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
@@ -224,7 +264,7 @@ templ floatingActions() {
 			</span>
 		}
 		@button.Button(button.Props{
-			ID:      "toc-toggle",
+			ID:      "sidebar-mobile-toggle",
 			Size:    button.SizeIcon,
 			Variant: button.VariantOutline,
 			Class:   "rounded-full h-11 w-11 shadow-lg bg-card lg:hidden",
@@ -291,6 +331,59 @@ templ pageScripts() {
 			themeToggle.addEventListener('click', () => {
 				setDark(!html.classList.contains('dark'));
 			});
+
+			// ========== SIDEBAR COLLAPSE (desktop) ==========
+			const sidebarCollapseBtn = document.getElementById('sidebar-collapse-btn');
+			const toc = document.getElementById('toc');
+			const sidebarBody = document.getElementById('sidebar-body');
+			const collapseIcon = document.getElementById('sidebar-collapse-icon');
+
+			if (sidebarCollapseBtn && toc && sidebarBody && collapseIcon) {
+				function setSidebarCollapsed(collapsed) {
+					toc.classList.toggle('w-64', !collapsed);
+					toc.classList.toggle('w-16', collapsed);
+					sidebarBody.classList.toggle('hidden', collapsed);
+					collapseIcon.classList.toggle('rotate-180', collapsed);
+					localStorage.setItem('sidebarCollapsed', collapsed);
+				}
+
+				// Restore sidebar state from localStorage
+				const savedCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+				setSidebarCollapsed(savedCollapsed);
+
+				sidebarCollapseBtn.addEventListener('click', () => {
+					// Don't toggle when in mobile overlay mode
+					if (toc.classList.contains('fixed')) return;
+					const isCollapsed = toc.classList.contains('w-16');
+					setSidebarCollapsed(!isCollapsed);
+				});
+			}
+
+			// ========== MOBILE SIDEBAR OVERLAY ==========
+			const mobileToggle = document.getElementById('sidebar-mobile-toggle');
+			if (mobileToggle && toc) {
+				mobileToggle.addEventListener('click', () => {
+					const isOverlay = toc.classList.contains('fixed');
+					if (isOverlay) {
+						toc.classList.remove('fixed', 'inset-0', 'z-40', 'w-full');
+						toc.classList.add('hidden');
+					} else {
+						toc.classList.remove('hidden', 'w-16');
+						toc.classList.add('fixed', 'inset-0', 'z-40', 'w-full');
+						// Ensure sidebar body is visible in overlay mode
+						if (sidebarBody) sidebarBody.classList.remove('hidden');
+						if (collapseIcon) collapseIcon.classList.remove('rotate-180');
+					}
+				});
+
+				// Close overlay when clicking outside (on the main content)
+				document.addEventListener('click', (e) => {
+					if (toc.classList.contains('fixed') && !toc.contains(e.target) && !mobileToggle.contains(e.target)) {
+						toc.classList.remove('fixed', 'inset-0', 'z-40', 'w-full');
+						toc.classList.add('hidden');
+					}
+				});
+			}
 
 			// ========== TABLE OF CONTENTS ==========
 			const tocList = document.getElementById('toc-list');
@@ -368,17 +461,6 @@ templ pageScripts() {
 			// ========== BACK TO TOP ==========
 			document.getElementById('back-to-top').addEventListener('click', () => {
 				window.scrollTo({ top: 0, behavior: 'smooth' });
-			});
-
-			// ========== TOGGLE TOC ON MOBILE ==========
-			const toc = document.getElementById('toc');
-			const tocToggle = document.getElementById('toc-toggle');
-			tocToggle.addEventListener('click', () => {
-				toc.classList.toggle('hidden');
-				toc.classList.toggle('fixed');
-				toc.classList.toggle('inset-0');
-				toc.classList.toggle('z-40');
-				toc.classList.toggle('w-full');
 			});
 
 			// ========== UPDATE LAST MODIFIED TIME ==========
