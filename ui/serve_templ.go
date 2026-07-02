@@ -646,7 +646,15 @@ func docHeader(data ServeData) templ.Component {
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
-					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 39, "</div>")
+					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 39, "<button id=\"copy-doc-btn\" class=\"inline-flex items-center gap-1.5 rounded-md border border-border px-3 py-1 text-xs font-semibold transition-all duration-200 bg-card text-muted-foreground hover:bg-accent hover:text-accent-foreground cursor-pointer shadow-sm\" title=\"Copy entire document to clipboard\"><span id=\"copy-doc-icon\">")
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+					templ_7745c5c3_Err = icon.ClipboardCopy(icon.Props{Size: 14}).Render(ctx, templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 40, "</span> <span id=\"copy-doc-label\">Copy</span></button></div>")
 					if templ_7745c5c3_Err != nil {
 						return templ_7745c5c3_Err
 					}
@@ -694,7 +702,7 @@ func articleContent(data ServeData) templ.Component {
 			templ_7745c5c3_Var23 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 40, "<article id=\"article-content\" class=\"prose prose-neutral dark:prose-invert max-w-none\n\t\t\tprose-headings:scroll-mt-20\n\t\t\tprose-a:text-primary prose-a:no-underline hover:prose-a:underline\n\t\t\tprose-code:before:content-none prose-code:after:content-none\n\t\t\tprose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-sm prose-code:font-normal\n\t\t\tprose-pre:bg-muted prose-pre:border prose-pre:rounded-lg\n\t\t\tprose-blockquote:border-l-primary prose-blockquote:bg-muted/50 prose-blockquote:rounded-r-lg\n\t\t\tprose-img:rounded-lg prose-img:shadow-md\n\t\t\tprose-table:overflow-hidden prose-table:rounded-lg prose-table:border\n\t\t\tprose-th:bg-muted prose-th:px-4 prose-th:py-2\n\t\t\tprose-td:px-4 prose-td:py-2\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 41, "<article id=\"article-content\" class=\"prose prose-neutral dark:prose-invert max-w-none\n\t\t\tprose-headings:scroll-mt-20\n\t\t\tprose-a:text-primary prose-a:no-underline hover:prose-a:underline\n\t\t\tprose-code:before:content-none prose-code:after:content-none\n\t\t\tprose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:text-sm prose-code:font-normal\n\t\t\tprose-pre:bg-muted prose-pre:border prose-pre:rounded-lg\n\t\t\tprose-blockquote:border-l-primary prose-blockquote:bg-muted/50 prose-blockquote:rounded-r-lg\n\t\t\tprose-img:rounded-lg prose-img:shadow-md\n\t\t\tprose-table:overflow-hidden prose-table:rounded-lg prose-table:border\n\t\t\tprose-th:bg-muted prose-th:px-4 prose-th:py-2\n\t\t\tprose-td:px-4 prose-td:py-2\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -702,7 +710,7 @@ func articleContent(data ServeData) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 41, "</article>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 42, "</article>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -732,7 +740,7 @@ func footerCredits() templ.Component {
 			templ_7745c5c3_Var24 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 42, "<footer class=\"border-t border-border bg-card/50 py-8\"><div class=\"max-w-4xl mx-auto px-6 text-center\"><p class=\"text-sm text-muted-foreground\">Created with <span class=\"text-red-500\">&#9829;</span> by <a href=\"https://github.com/tacheraSasi\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-primary hover:underline font-medium\">Tachera Sasi</a></p><a href=\"https://github.com/tacheraSasi/mdcli\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors mt-2\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 43, "<footer class=\"border-t border-border bg-card/50 py-8\"><div class=\"max-w-4xl mx-auto px-6 text-center\"><p class=\"text-sm text-muted-foreground\">Built by <a href=\"https://github.com/tacheraSasi\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-primary hover:underline font-medium\">Tachera Sasi</a></p><a href=\"https://github.com/tacheraSasi/mdcli\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors mt-2\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -740,7 +748,7 @@ func footerCredits() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 43, "<span>tacheraSasi/mdcli</span>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 44, "<span>mdcli</span>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -748,7 +756,7 @@ func footerCredits() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 44, "</a></div></footer>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 45, "</a></div></footer>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -778,7 +786,7 @@ func floatingActions() templ.Component {
 			templ_7745c5c3_Var25 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 45, "<div class=\"fixed bottom-6 right-6 flex flex-col gap-3 z-50\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 46, "<div class=\"fixed bottom-6 right-6 flex flex-col gap-3 z-50\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -794,7 +802,7 @@ func floatingActions() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 46, "<span id=\"theme-icon-moon\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 47, "<span id=\"theme-icon-moon\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -802,7 +810,7 @@ func floatingActions() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 47, "</span> <span id=\"theme-icon-sun\" class=\"hidden\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 48, "</span> <span id=\"theme-icon-sun\" class=\"hidden\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -810,7 +818,7 @@ func floatingActions() templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 48, "</span>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 49, "</span>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -864,6 +872,41 @@ func floatingActions() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 50, "<span id=\"copy-doc-fab-icon\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = icon.ClipboardCopy(icon.Props{Size: 18}).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 51, "</span>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			return nil
+		})
+		templ_7745c5c3_Err = button.Button(button.Props{
+			ID:      "copy-doc-fab",
+			Size:    button.SizeIcon,
+			Variant: button.VariantOutline,
+			Class:   "rounded-full h-11 w-11 shadow-lg bg-card",
+		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var28), templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Var29 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+			if !templ_7745c5c3_IsBuffer {
+				defer func() {
+					templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err == nil {
+						templ_7745c5c3_Err = templ_7745c5c3_BufErr
+					}
+				}()
+			}
+			ctx = templ.InitializeContext(ctx)
 			templ_7745c5c3_Err = icon.ArrowUp(icon.Props{Size: 18}).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -875,11 +918,11 @@ func floatingActions() templ.Component {
 			Size:    button.SizeIcon,
 			Variant: button.VariantOutline,
 			Class:   "rounded-full h-11 w-11 shadow-lg bg-card",
-		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var28), templ_7745c5c3_Buffer)
+		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var29), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 49, "</div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 52, "</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -904,12 +947,12 @@ func autoReloadScript() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var29 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var29 == nil {
-			templ_7745c5c3_Var29 = templ.NopComponent
+		templ_7745c5c3_Var30 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var30 == nil {
+			templ_7745c5c3_Var30 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 50, "<script>\n\t\tlet lastModified = 0;\n\t\tfunction checkForUpdates() {\n\t\t\tfetch('/status')\n\t\t\t\t.then(r => r.json())\n\t\t\t\t.then(data => {\n\t\t\t\t\tif (data.lastModified !== lastModified && lastModified !== 0) {\n\t\t\t\t\t\tlocation.reload();\n\t\t\t\t\t}\n\t\t\t\t\tlastModified = data.lastModified;\n\t\t\t\t})\n\t\t\t\t.catch(() => {});\n\t\t}\n\t\tsetInterval(checkForUpdates, 1000);\n\t\tcheckForUpdates();\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 53, "<script>\n\t\tlet lastModified = 0;\n\t\tfunction checkForUpdates() {\n\t\t\tfetch('/status')\n\t\t\t\t.then(r => r.json())\n\t\t\t\t.then(data => {\n\t\t\t\t\tif (data.lastModified !== lastModified && lastModified !== 0) {\n\t\t\t\t\t\tlocation.reload();\n\t\t\t\t\t}\n\t\t\t\t\tlastModified = data.lastModified;\n\t\t\t\t})\n\t\t\t\t.catch(() => {});\n\t\t}\n\t\tsetInterval(checkForUpdates, 1000);\n\t\tcheckForUpdates();\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -934,12 +977,12 @@ func pageScripts() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var30 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var30 == nil {
-			templ_7745c5c3_Var30 = templ.NopComponent
+		templ_7745c5c3_Var31 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var31 == nil {
+			templ_7745c5c3_Var31 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 51, "<script>\n\t\t(function() {\n\t\t\t// ========== THEME TOGGLE ==========\n\t\t\tconst themeToggle = document.getElementById('theme-toggle');\n\t\t\tconst moonIcon = document.getElementById('theme-icon-moon');\n\t\t\tconst sunIcon = document.getElementById('theme-icon-sun');\n\t\t\tconst html = document.documentElement;\n\n\t\t\tfunction setDark(isDark) {\n\t\t\t\thtml.classList.toggle('dark', isDark);\n\t\t\t\tmoonIcon.classList.toggle('hidden', isDark);\n\t\t\t\tsunIcon.classList.toggle('hidden', !isDark);\n\t\t\t\tlocalStorage.setItem('theme', isDark ? 'dark' : 'light');\n\t\t\t}\n\n\t\t\tconst storedTheme = localStorage.getItem('theme');\n\t\t\tif (storedTheme === 'light') {\n\t\t\t\tsetDark(false);\n\t\t\t} else if (storedTheme === 'dark') {\n\t\t\t\tsetDark(true);\n\t\t\t} else {\n\t\t\t\tsetDark(window.matchMedia('(prefers-color-scheme: dark)').matches);\n\t\t\t}\n\n\t\t\tthemeToggle.addEventListener('click', () => {\n\t\t\t\tsetDark(!html.classList.contains('dark'));\n\t\t\t});\n\n\t\t\t// ========== SIDEBAR COLLAPSE (desktop) ==========\n\t\t\tconst sidebarCollapseBtn = document.getElementById('sidebar-collapse-btn');\n\t\t\tconst toc = document.getElementById('toc');\n\t\t\tconst sidebarBody = document.getElementById('sidebar-body');\n\t\t\tconst collapseIcon = document.getElementById('sidebar-collapse-icon');\n\n\t\t\tif (sidebarCollapseBtn && toc && sidebarBody && collapseIcon) {\n\t\t\t\tfunction setSidebarCollapsed(collapsed) {\n\t\t\t\t\ttoc.classList.toggle('w-64', !collapsed);\n\t\t\t\t\ttoc.classList.toggle('w-16', collapsed);\n\t\t\t\t\tsidebarBody.classList.toggle('hidden', collapsed);\n\t\t\t\t\tcollapseIcon.classList.toggle('rotate-180', collapsed);\n\t\t\t\t\tlocalStorage.setItem('sidebarCollapsed', collapsed);\n\t\t\t\t}\n\n\t\t\t\t// Restore sidebar state from localStorage\n\t\t\t\tconst savedCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';\n\t\t\t\tsetSidebarCollapsed(savedCollapsed);\n\n\t\t\t\tsidebarCollapseBtn.addEventListener('click', () => {\n\t\t\t\t\t// Don't toggle when in mobile overlay mode\n\t\t\t\t\tif (toc.classList.contains('fixed')) return;\n\t\t\t\t\tconst isCollapsed = toc.classList.contains('w-16');\n\t\t\t\t\tsetSidebarCollapsed(!isCollapsed);\n\t\t\t\t});\n\t\t\t}\n\n\t\t\t// ========== MOBILE SIDEBAR OVERLAY ==========\n\t\t\tconst mobileToggle = document.getElementById('sidebar-mobile-toggle');\n\t\t\tif (mobileToggle && toc) {\n\t\t\t\tmobileToggle.addEventListener('click', () => {\n\t\t\t\t\tconst isOverlay = toc.classList.contains('fixed');\n\t\t\t\t\tif (isOverlay) {\n\t\t\t\t\t\ttoc.classList.remove('fixed', 'inset-0', 'z-40', 'w-full');\n\t\t\t\t\t\ttoc.classList.add('hidden');\n\t\t\t\t\t} else {\n\t\t\t\t\t\ttoc.classList.remove('hidden', 'w-16');\n\t\t\t\t\t\ttoc.classList.add('fixed', 'inset-0', 'z-40', 'w-full');\n\t\t\t\t\t\t// Ensure sidebar body is visible in overlay mode\n\t\t\t\t\t\tif (sidebarBody) sidebarBody.classList.remove('hidden');\n\t\t\t\t\t\tif (collapseIcon) collapseIcon.classList.remove('rotate-180');\n\t\t\t\t\t}\n\t\t\t\t});\n\n\t\t\t\t// Close overlay when clicking outside (on the main content)\n\t\t\t\tdocument.addEventListener('click', (e) => {\n\t\t\t\t\tif (toc.classList.contains('fixed') && !toc.contains(e.target) && !mobileToggle.contains(e.target)) {\n\t\t\t\t\t\ttoc.classList.remove('fixed', 'inset-0', 'z-40', 'w-full');\n\t\t\t\t\t\ttoc.classList.add('hidden');\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t}\n\n\t\t\t// ========== TABLE OF CONTENTS ==========\n\t\t\tconst tocList = document.getElementById('toc-list');\n\t\t\tconst headings = document.querySelectorAll('#article-content h1, #article-content h2, #article-content h3, #article-content h4');\n\n\t\t\tif (tocList) {\n\t\t\t\tif (headings.length > 0) {\n\t\t\t\t\theadings.forEach((heading, index) => {\n\t\t\t\t\t\tif (!heading.id) {\n\t\t\t\t\t\t\theading.id = heading.tagName.toLowerCase() + '-' + index;\n\t\t\t\t\t\t}\n\t\t\t\t\t\tconst li = document.createElement('li');\n\t\t\t\t\t\tconst level = parseInt(heading.tagName[1]);\n\t\t\t\t\t\tconst indent = (level - 1) * 12;\n\t\t\t\t\t\tli.style.paddingLeft = indent + 'px';\n\t\t\t\t\t\tli.className = 'rounded-md';\n\t\t\t\t\t\tconst a = document.createElement('a');\n\t\t\t\t\t\ta.href = '#' + heading.id;\n\t\t\t\t\t\ta.textContent = heading.textContent;\n\t\t\t\t\t\ta.className = 'block py-1 px-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors';\n\t\t\t\t\t\tli.appendChild(a);\n\t\t\t\t\t\ttocList.appendChild(li);\n\t\t\t\t\t});\n\t\t\t\t} else {\n\t\t\t\t\ttocList.innerHTML = '<li class=\"text-muted-foreground italic text-xs px-2\">No headings</li>';\n\t\t\t\t}\n\n\t\t\t\t// Highlight active TOC item on scroll\n\t\t\t\tfunction setActiveTOC() {\n\t\t\t\t\tconst scrollPos = window.scrollY + 100;\n\t\t\t\t\tlet current = null;\n\t\t\t\t\tfor (let i = headings.length - 1; i >= 0; i--) {\n\t\t\t\t\t\tif (headings[i].offsetTop <= scrollPos) {\n\t\t\t\t\t\t\tcurrent = headings[i];\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\ttocList.querySelectorAll('a').forEach(a => {\n\t\t\t\t\t\ta.classList.remove('bg-accent', 'text-accent-foreground', 'font-medium');\n\t\t\t\t\t});\n\t\t\t\t\tif (current) {\n\t\t\t\t\t\tconst activeLink = tocList.querySelector('a[href=\"#' + current.id + '\"]');\n\t\t\t\t\t\tif (activeLink) {\n\t\t\t\t\t\t\tactiveLink.classList.add('bg-accent', 'text-accent-foreground', 'font-medium');\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\twindow.addEventListener('scroll', setActiveTOC);\n\t\t\t\tsetActiveTOC();\n\t\t\t}\n\n\t\t\t// ========== COPY CODE BUTTONS ==========\n\t\t\tdocument.querySelectorAll('#article-content pre').forEach(pre => {\n\t\t\t\tconst wrapper = document.createElement('div');\n\t\t\t\twrapper.className = 'relative group';\n\t\t\t\tpre.parentNode.insertBefore(wrapper, pre);\n\t\t\t\twrapper.appendChild(pre);\n\n\t\t\t\tconst btn = document.createElement('button');\n\t\t\t\tbtn.className = 'absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center justify-center rounded-md text-sm h-8 w-8 border bg-card text-muted-foreground hover:text-foreground hover:bg-accent cursor-pointer';\n\t\t\t\tbtn.innerHTML = '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/></svg>';\n\t\t\t\tbtn.addEventListener('click', () => {\n\t\t\t\t\tconst code = pre.querySelector('code');\n\t\t\t\t\tconst text = code ? code.innerText : pre.innerText;\n\t\t\t\t\tnavigator.clipboard.writeText(text).then(() => {\n\t\t\t\t\t\tbtn.innerHTML = '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg>';\n\t\t\t\t\t\tsetTimeout(() => {\n\t\t\t\t\t\t\tbtn.innerHTML = '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/></svg>';\n\t\t\t\t\t\t}, 2000);\n\t\t\t\t\t});\n\t\t\t\t});\n\t\t\t\twrapper.appendChild(btn);\n\t\t\t});\n\n\t\t\t// ========== BACK TO TOP ==========\n\t\t\tdocument.getElementById('back-to-top').addEventListener('click', () => {\n\t\t\t\twindow.scrollTo({ top: 0, behavior: 'smooth' });\n\t\t\t});\n\n\t\t\t// ========== UPDATE LAST MODIFIED TIME ==========\n\t\t\tfunction updateModTime() {\n\t\t\t\tfetch('/status')\n\t\t\t\t\t.then(r => r.json())\n\t\t\t\t\t.then(data => {\n\t\t\t\t\t\tconst d = new Date(data.lastModified * 1000);\n\t\t\t\t\t\tdocument.getElementById('file-mod-time').textContent = d.toLocaleTimeString();\n\t\t\t\t\t})\n\t\t\t\t\t.catch(() => {});\n\t\t\t}\n\t\t\tupdateModTime();\n\t\t\tsetInterval(updateModTime, 5000);\n\n\t\t\t// ========== SYNTAX HIGHLIGHTING ==========\n\t\t\thljs.highlightAll();\n\t\t})();\n\t</script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 54, "<script>\n\t\t(function() {\n\t\t\t// ========== THEME TOGGLE ==========\n\t\t\tconst themeToggle = document.getElementById('theme-toggle');\n\t\t\tconst moonIcon = document.getElementById('theme-icon-moon');\n\t\t\tconst sunIcon = document.getElementById('theme-icon-sun');\n\t\t\tconst html = document.documentElement;\n\n\t\t\tfunction setDark(isDark) {\n\t\t\t\thtml.classList.toggle('dark', isDark);\n\t\t\t\tmoonIcon.classList.toggle('hidden', isDark);\n\t\t\t\tsunIcon.classList.toggle('hidden', !isDark);\n\t\t\t\tlocalStorage.setItem('theme', isDark ? 'dark' : 'light');\n\t\t\t}\n\n\t\t\tconst storedTheme = localStorage.getItem('theme');\n\t\t\tif (storedTheme === 'light') {\n\t\t\t\tsetDark(false);\n\t\t\t} else if (storedTheme === 'dark') {\n\t\t\t\tsetDark(true);\n\t\t\t} else {\n\t\t\t\tsetDark(window.matchMedia('(prefers-color-scheme: dark)').matches);\n\t\t\t}\n\n\t\t\tthemeToggle.addEventListener('click', () => {\n\t\t\t\tsetDark(!html.classList.contains('dark'));\n\t\t\t});\n\n\t\t\t// ========== SIDEBAR COLLAPSE (desktop) ==========\n\t\t\tconst sidebarCollapseBtn = document.getElementById('sidebar-collapse-btn');\n\t\t\tconst toc = document.getElementById('toc');\n\t\t\tconst sidebarBody = document.getElementById('sidebar-body');\n\t\t\tconst collapseIcon = document.getElementById('sidebar-collapse-icon');\n\n\t\t\tif (sidebarCollapseBtn && toc && sidebarBody && collapseIcon) {\n\t\t\t\tfunction setSidebarCollapsed(collapsed) {\n\t\t\t\t\ttoc.classList.toggle('w-64', !collapsed);\n\t\t\t\t\ttoc.classList.toggle('w-16', collapsed);\n\t\t\t\t\tsidebarBody.classList.toggle('hidden', collapsed);\n\t\t\t\t\tcollapseIcon.classList.toggle('rotate-180', collapsed);\n\t\t\t\t\tlocalStorage.setItem('sidebarCollapsed', collapsed);\n\t\t\t\t}\n\n\t\t\t\t// Restore sidebar state from localStorage\n\t\t\t\tconst savedCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';\n\t\t\t\tsetSidebarCollapsed(savedCollapsed);\n\n\t\t\t\tsidebarCollapseBtn.addEventListener('click', () => {\n\t\t\t\t\t// Don't toggle when in mobile overlay mode\n\t\t\t\t\tif (toc.classList.contains('fixed')) return;\n\t\t\t\t\tconst isCollapsed = toc.classList.contains('w-16');\n\t\t\t\t\tsetSidebarCollapsed(!isCollapsed);\n\t\t\t\t});\n\t\t\t}\n\n\t\t\t// ========== MOBILE SIDEBAR OVERLAY ==========\n\t\t\tconst mobileToggle = document.getElementById('sidebar-mobile-toggle');\n\t\t\tif (mobileToggle && toc) {\n\t\t\t\tmobileToggle.addEventListener('click', () => {\n\t\t\t\t\tconst isOverlay = toc.classList.contains('fixed');\n\t\t\t\t\tif (isOverlay) {\n\t\t\t\t\t\ttoc.classList.remove('fixed', 'inset-0', 'z-40', 'w-full');\n\t\t\t\t\t\ttoc.classList.add('hidden');\n\t\t\t\t\t} else {\n\t\t\t\t\t\ttoc.classList.remove('hidden', 'w-16');\n\t\t\t\t\t\ttoc.classList.add('fixed', 'inset-0', 'z-40', 'w-full');\n\t\t\t\t\t\t// Ensure sidebar body is visible in overlay mode\n\t\t\t\t\t\tif (sidebarBody) sidebarBody.classList.remove('hidden');\n\t\t\t\t\t\tif (collapseIcon) collapseIcon.classList.remove('rotate-180');\n\t\t\t\t\t}\n\t\t\t\t});\n\n\t\t\t\t// Close overlay when clicking outside (on the main content)\n\t\t\t\tdocument.addEventListener('click', (e) => {\n\t\t\t\t\tif (toc.classList.contains('fixed') && !toc.contains(e.target) && !mobileToggle.contains(e.target)) {\n\t\t\t\t\t\ttoc.classList.remove('fixed', 'inset-0', 'z-40', 'w-full');\n\t\t\t\t\t\ttoc.classList.add('hidden');\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t}\n\n\t\t\t// ========== TABLE OF CONTENTS ==========\n\t\t\tconst tocList = document.getElementById('toc-list');\n\t\t\tconst headings = document.querySelectorAll('#article-content h1, #article-content h2, #article-content h3, #article-content h4');\n\n\t\t\tif (tocList) {\n\t\t\t\tif (headings.length > 0) {\n\t\t\t\t\theadings.forEach((heading, index) => {\n\t\t\t\t\t\tif (!heading.id) {\n\t\t\t\t\t\t\theading.id = heading.tagName.toLowerCase() + '-' + index;\n\t\t\t\t\t\t}\n\t\t\t\t\t\tconst li = document.createElement('li');\n\t\t\t\t\t\tconst level = parseInt(heading.tagName[1]);\n\t\t\t\t\t\tconst indent = (level - 1) * 12;\n\t\t\t\t\t\tli.style.paddingLeft = indent + 'px';\n\t\t\t\t\t\tli.className = 'rounded-md';\n\t\t\t\t\t\tconst a = document.createElement('a');\n\t\t\t\t\t\ta.href = '#' + heading.id;\n\t\t\t\t\t\ta.textContent = heading.textContent;\n\t\t\t\t\t\ta.className = 'block py-1 px-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors';\n\t\t\t\t\t\tli.appendChild(a);\n\t\t\t\t\t\ttocList.appendChild(li);\n\t\t\t\t\t});\n\t\t\t\t} else {\n\t\t\t\t\ttocList.innerHTML = '<li class=\"text-muted-foreground italic text-xs px-2\">No headings</li>';\n\t\t\t\t}\n\n\t\t\t\t// Highlight active TOC item on scroll\n\t\t\t\tfunction setActiveTOC() {\n\t\t\t\t\tconst scrollPos = window.scrollY + 100;\n\t\t\t\t\tlet current = null;\n\t\t\t\t\tfor (let i = headings.length - 1; i >= 0; i--) {\n\t\t\t\t\t\tif (headings[i].offsetTop <= scrollPos) {\n\t\t\t\t\t\t\tcurrent = headings[i];\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\ttocList.querySelectorAll('a').forEach(a => {\n\t\t\t\t\t\ta.classList.remove('bg-accent', 'text-accent-foreground', 'font-medium');\n\t\t\t\t\t});\n\t\t\t\t\tif (current) {\n\t\t\t\t\t\tconst activeLink = tocList.querySelector('a[href=\"#' + current.id + '\"]');\n\t\t\t\t\t\tif (activeLink) {\n\t\t\t\t\t\t\tactiveLink.classList.add('bg-accent', 'text-accent-foreground', 'font-medium');\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\twindow.addEventListener('scroll', setActiveTOC);\n\t\t\t\tsetActiveTOC();\n\t\t\t}\n\n\t\t\t// ========== COPY CODE BUTTONS ==========\n\t\t\tdocument.querySelectorAll('#article-content pre').forEach(pre => {\n\t\t\t\tconst wrapper = document.createElement('div');\n\t\t\t\twrapper.className = 'relative group';\n\t\t\t\tpre.parentNode.insertBefore(wrapper, pre);\n\t\t\t\twrapper.appendChild(pre);\n\n\t\t\t\tconst btn = document.createElement('button');\n\t\t\t\tbtn.className = 'absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center justify-center rounded-md text-sm h-8 w-8 border bg-card text-muted-foreground hover:text-foreground hover:bg-accent cursor-pointer';\n\t\t\t\tbtn.innerHTML = '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/></svg>';\n\t\t\t\tbtn.addEventListener('click', () => {\n\t\t\t\t\tconst code = pre.querySelector('code');\n\t\t\t\t\tconst text = code ? code.innerText : pre.innerText;\n\t\t\t\t\tnavigator.clipboard.writeText(text).then(() => {\n\t\t\t\t\t\tbtn.innerHTML = '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg>';\n\t\t\t\t\t\tsetTimeout(() => {\n\t\t\t\t\t\t\tbtn.innerHTML = '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\"/><path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\"/></svg>';\n\t\t\t\t\t\t}, 2000);\n\t\t\t\t\t});\n\t\t\t\t});\n\t\t\t\twrapper.appendChild(btn);\n\t\t\t});\n\n\t\t\t// ========== COPY ENTIRE DOCUMENT ==========\n\t\t\tfunction copyEntireDoc() {\n\t\t\t\tconst article = document.getElementById('article-content');\n\t\t\t\tif (!article) return;\n\t\t\t\tconst text = article.innerText;\n\t\t\t\tnavigator.clipboard.writeText(text).then(() => {\n\t\t\t\t\t// Update header badge\n\t\t\t\t\tconst label = document.getElementById('copy-doc-label');\n\t\t\t\t\tconst icon = document.getElementById('copy-doc-icon');\n\t\t\t\t\tif (label) label.textContent = 'Copied!';\n\t\t\t\t\tif (icon) icon.innerHTML = '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg>';\n\t\t\t\t\t// Update floating button\n\t\t\t\t\tconst fabIcon = document.getElementById('copy-doc-fab-icon');\n\t\t\t\t\tif (fabIcon) fabIcon.innerHTML = '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 6 9 17l-5-5\"/></svg>';\n\t\t\t\t\tsetTimeout(() => {\n\t\t\t\t\t\t// Restore header icon and label\n\t\t\t\t\t\tif (label) label.textContent = 'Copy';\n\t\t\t\t\t\tif (icon) {\n\t\t\t\t\t\t\ticon.innerHTML = '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2\"/><rect width=\"8\" height=\"4\" x=\"8\" y=\"2\" rx=\"1\" ry=\"1\"/></svg>';\n\t\t\t\t\t\t}\n\t\t\t\t\t\t// Restore FAB icon\n\t\t\t\t\t\tif (fabIcon) {\n\t\t\t\t\t\t\tfabIcon.innerHTML = '<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2\"/><rect width=\"8\" height=\"4\" x=\"8\" y=\"2\" rx=\"1\" ry=\"1\"/></svg>';\n\t\t\t\t\t\t}\n\t\t\t\t\t}, 2000);\n\t\t\t\t}).catch(() => {\n\t\t\t\t\tconst label = document.getElementById('copy-doc-label');\n\t\t\t\t\tif (label) label.textContent = 'Failed';\n\t\t\t\t\tsetTimeout(() => {\n\t\t\t\t\t\tif (label) label.textContent = 'Copy';\n\t\t\t\t\t}, 2000);\n\t\t\t\t});\n\t\t\t}\n\n\t\t\tconst copyDocBtn = document.getElementById('copy-doc-btn');\n\t\t\tif (copyDocBtn) {\n\t\t\t\tcopyDocBtn.addEventListener('click', copyEntireDoc);\n\t\t\t}\n\t\t\tconst copyDocFab = document.getElementById('copy-doc-fab');\n\t\t\tif (copyDocFab) {\n\t\t\t\tcopyDocFab.addEventListener('click', copyEntireDoc);\n\t\t\t}\n\n\t\t\t// ========== BACK TO TOP ==========\n\t\t\tdocument.getElementById('back-to-top').addEventListener('click', () => {\n\t\t\t\twindow.scrollTo({ top: 0, behavior: 'smooth' });\n\t\t\t});\n\n\t\t\t// ========== UPDATE LAST MODIFIED TIME ==========\n\t\t\tfunction updateModTime() {\n\t\t\t\tfetch('/status')\n\t\t\t\t\t.then(r => r.json())\n\t\t\t\t\t.then(data => {\n\t\t\t\t\t\tconst d = new Date(data.lastModified * 1000);\n\t\t\t\t\t\tdocument.getElementById('file-mod-time').textContent = d.toLocaleTimeString();\n\t\t\t\t\t})\n\t\t\t\t\t.catch(() => {});\n\t\t\t}\n\t\t\tupdateModTime();\n\t\t\tsetInterval(updateModTime, 5000);\n\n\t\t\t// ========== SYNTAX HIGHLIGHTING ==========\n\t\t\thljs.highlightAll();\n\t\t})();\n\t</script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
